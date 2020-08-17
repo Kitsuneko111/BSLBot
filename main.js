@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const request = require('request')
+const {token} = require('./config.json')
 
 client.once('ready', () => {
     console.log('logged in')
@@ -59,4 +60,4 @@ client.on('message', async message =>{
     
 })
 
-client.login('NzM4MzU2NTc5Mzc5NzA4MDA2.XyKuJg.7n3y7ta1l1SUX4CMhZyebPZ69WI')
+client.login(token)
