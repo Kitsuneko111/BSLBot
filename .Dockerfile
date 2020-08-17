@@ -1,4 +1,4 @@
 FROM arm64
-COPY . ./
+COPY ./ ./
 RUN make ./
 CMD node ./main.js
