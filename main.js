@@ -5,6 +5,7 @@ const {token} = require('./config.json')
 
 client.once('ready', () => {
     console.log('logged in')
+    client.user.setActivity('BSL help', {type:'LISTENING'})
 })
 
 const createEmbed = (title, url, member, body) => {
@@ -33,7 +34,7 @@ function downloadPage(url){
             if(response.statusCode > 300){
                 reject(`Invalid status code ${response.statusCode}`)
             }
-            if(body.includes('No results')){
+            if(body.includes('No results')||body.includes('no video found')){
                 reject('404 no results')
             }
             resolve(body)
@@ -45,6 +46,17 @@ client.on('message', async message =>{
     if(message.author.bot) return
     if(message.content == 'BSL invite'){
         client.generateInvite(67497024).then(val => {message.author.send(val).catch(err => message.reply('Please turn on DMs to get an invite!')); message.channel.send('Invite is in your DMs!')})
+    }
+    if(message.content == 'BSL help'){
+        embed = new Discord.RichEmbed()
+        embed.setTitle('Help')
+        .setColor('eded00')
+        .setTimestamp(Date.now())
+        .setFooter(`requested by ${message.member.nickname||message.author.username}`)
+        .addField('Main Commands:', '<@738356579379708006> <word>\n?<word>\n? <word>')
+        .addField('Sub Commands:', 'BSL help\nBSL invite')
+        .addField('Hosted locally and therefore will not always be up, contact Timemaster111#8292 for any issues','\u200b')
+        message.channel.send(embed)
     }
     if(!message.content.startsWith('<@738356579379708006>')&&!message.content.startsWith('<@!738356579379708006>')&&!message.content.startsWith('?')&&message.guild) return
     content = message.content
